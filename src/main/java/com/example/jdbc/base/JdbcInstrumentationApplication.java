@@ -12,9 +12,6 @@ import io.dropwizard.db.ManagedDataSource;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
-/**
- * Created by jhyatt on 9/24/2015.
- */
 public class JdbcInstrumentationApplication extends FiberApplication<JdbcInstrumentationConfiguration> {
     static final MetricRegistry metrics = new MetricRegistry();
 
@@ -24,7 +21,7 @@ public class JdbcInstrumentationApplication extends FiberApplication<JdbcInstrum
 
     @Override
     public String getName() {
-        return "DisbursementRequest";
+        return "JdbcInstrumentation";
     }
 
     @Override
