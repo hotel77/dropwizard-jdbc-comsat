@@ -5,6 +5,7 @@ import com.example.jdbc.dao.IAccountDAO;
 import com.example.jdbc.model.Account;
 
 import java.sql.SQLException;
+import java.util.List;
 
 public class AccountDomain implements IAccountDomain {
 
@@ -27,5 +28,25 @@ public class AccountDomain implements IAccountDomain {
         createdAcct.setId(accountDAO.insertAccount(name));
         createdAcct.setName(name);
         return createdAcct;
+    }
+
+    @Override
+    public Account getAccount(String name) throws SQLException, SuspendExecution {
+        if (accountDAO.tableExists())
+            return accountDAO.getAccount(name);
+        else return null;
+    }
+
+    @Override
+    public void dropTable() throws SQLException, SuspendExecution {
+        if (accountDAO.tableExists())
+            accountDAO.dropTable();
+    }
+
+    @Override
+    public List<Account> getAccounts() throws SQLException, SuspendExecution {
+        if (accountDAO.tableExists())
+            return accountDAO.getAccounts();
+        else return null;
     }
 }
