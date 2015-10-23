@@ -11,7 +11,7 @@
     <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
-        <dropwizard.version>0.8.0</dropwizard.version>
+        <dropwizard.version>0.8.3</dropwizard.version>
         <comsat.version>0.5.0</comsat.version>
     </properties>
 
@@ -36,28 +36,16 @@
             <artifactId>comsat-dropwizard</artifactId>
             <version>${comsat.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>co.paralleluniverse</groupId>-->
-            <!--<artifactId>comsat-jdbc</artifactId>-->
-            <!--<version>${comsat.version}</version>-->
-        <!--</dependency>-->
-        <dependency>
-            <groupId>co.paralleluniverse</groupId>
-            <artifactId>comsat-httpclient</artifactId>
-            <version>${comsat.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.apache.derby</groupId>
             <artifactId>derby</artifactId>
             <version>10.11.1.1</version>
         </dependency>
-
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
+        <groupId>co.paralleluniverse</groupId>
+        <artifactId>comsat-jdbc</artifactId>
+        <version>${comsat.version}</version>
         </dependency>
-       
     </dependencies>
 
 <build>
@@ -65,9 +53,9 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-shade-plugin</artifactId>
-            <version>2.3</version>
+            <version>2.4.1</version>
             <configuration>
-                <createDependencyReducedPom>false</createDependencyReducedPom>
+                <createDependencyReducedPom>true</createDependencyReducedPom>
                 <filters>
                    <filter>
                         <artifact>*:*</artifact>
@@ -86,6 +74,28 @@
                         <goal>shade</goal>
                     </goals>
                     <configuration>
+                        <!--<artifactSet>-->
+                            <!--&lt;!&ndash;<includes>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<include>co.paralleluniverse:comsat-jdbc*</include>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</includes>&ndash;&gt;-->
+                            <!--<excludes>-->
+                                <!--<exclude>io.dropwizard:dropwizard-jdbi:*</exclude>-->
+                            <!--</excludes>-->
+                        <!--</artifactSet>-->
+                        <!--<filters>-->
+                            <!--&lt;!&ndash;<filter>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<artifact>co.paralleluniverse:comsat-jdbc</artifact>&ndash;&gt;-->
+                                <!--&lt;!&ndash;<includes>&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<include>comsat-jdbc/**</include>&ndash;&gt;-->
+                                <!--&lt;!&ndash;</includes>&ndash;&gt;-->
+                            <!--&lt;!&ndash;</filter>&ndash;&gt;-->
+                            <!--<filter>-->
+                                <!--<artifact>io.dropwizard:dropwizard-jdbi</artifact>-->
+                                <!--<excludes>-->
+                                    <!--<exclude>dropwizard-jdbi/**</exclude>-->
+                                <!--</excludes>-->
+                            <!--</filter>-->
+                        <!--</filters>-->
                         <transformers>
                             <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
                             <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
@@ -99,7 +109,7 @@
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-jar-plugin</artifactId>
-            <version>2.4</version>
+            <version>2.6</version>
             <configuration>
                 <archive>
                     <manifest>

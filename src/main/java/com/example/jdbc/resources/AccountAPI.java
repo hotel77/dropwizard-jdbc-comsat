@@ -1,6 +1,7 @@
 package com.example.jdbc.resources;
 
 import co.paralleluniverse.fibers.SuspendExecution;
+import co.paralleluniverse.fibers.Suspendable;
 import com.codahale.metrics.annotation.Timed;
 import com.example.jdbc.domain.IAccountDomain;
 import com.example.jdbc.model.Account;
@@ -23,6 +24,7 @@ public class AccountAPI {
 
     @POST
     @Timed
+    @Suspendable
     public Account CreateAccount(@Valid Account account) throws SQLException, SuspendExecution {
 
         return accountDomain.createAccount(account.getName());
@@ -31,6 +33,7 @@ public class AccountAPI {
     @POST
     @Timed
     @Path("/drop")
+    @Suspendable
     public void dropTable(@QueryParam("name")String name) throws SQLException, SuspendExecution {
 
         accountDomain.dropTable();
@@ -39,6 +42,7 @@ public class AccountAPI {
     @GET
     @Timed
     @Path("/all")
+    @Suspendable
     public Accounts getAllAccounts() throws SQLException, SuspendExecution {
 
         return new Accounts(accountDomain.getAccounts());
