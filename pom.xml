@@ -2,106 +2,58 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>jdbc-instrumentation</artifactId>
-    <version>1.0-SNAPSHOT</version>
+<groupId>com.example</groupId>
+<artifactId>jdbc-instrumentation</artifactId>
+<version>1.0-SNAPSHOT</version>
 
-    <properties>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-        <dropwizard.version>0.8.3</dropwizard.version>
-        <comsat.version>0.5.0</comsat.version>
-    </properties>
+<properties>
+    <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+    <dropwizard.version>0.8.3</dropwizard.version>
+    <comsat.version>0.5.0</comsat.version>
+    <capsule.maven.plugin.version>0.10.8</capsule.maven.plugin.version>
+    <capsule.daemon.version>0.1.0</capsule.daemon.version>
+</properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>io.dropwizard</groupId>
-            <artifactId>dropwizard-core</artifactId>
-            <version>${dropwizard.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.dropwizard</groupId>
-            <artifactId>dropwizard-jersey</artifactId>
-            <version>${dropwizard.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>co.paralleluniverse</groupId>
-            <artifactId>quasar-core</artifactId>
-            <version>0.7.3</version>
-        </dependency>
-        <dependency>
-            <groupId>co.paralleluniverse</groupId>
-            <artifactId>comsat-dropwizard</artifactId>
-            <version>${comsat.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.derby</groupId>
-            <artifactId>derby</artifactId>
-            <version>10.11.1.1</version>
-        </dependency>
-        <dependency>
+<dependencies>
+    <dependency>
         <groupId>co.paralleluniverse</groupId>
-        <artifactId>comsat-jdbc</artifactId>
+        <artifactId>comsat-dropwizard</artifactId>
         <version>${comsat.version}</version>
-        </dependency>
-    </dependencies>
+    </dependency>
+    <dependency>
+        <groupId>io.dropwizard</groupId>
+        <artifactId>dropwizard-jersey</artifactId>
+        <version>${dropwizard.version}</version>
+    </dependency>
+    <dependency>
+        <groupId>co.paralleluniverse</groupId>
+        <artifactId>quasar-core</artifactId>
+        <version>0.7.3</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.derby</groupId>
+        <artifactId>derby</artifactId>
+        <version>10.11.1.1</version>
+    </dependency>
+</dependencies>
 
 <build>
     <plugins>
         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>2.4.1</version>
-            <configuration>
-                <createDependencyReducedPom>true</createDependencyReducedPom>
-                <filters>
-                   <filter>
-                        <artifact>*:*</artifact>
-                        <excludes>
-                            <exclude>META-INF/*.SF</exclude>
-                            <exclude>META-INF/*.DSA</exclude>
-                            <exclude>META-INF/*.RSA</exclude>
-                        </excludes>
-                    </filter>
-                </filters>
-            </configuration>
+            <groupId>com.github.chrischristo</groupId>
+            <artifactId>capsule-maven-plugin</artifactId>
+            <version>${capsule.maven.plugin.version}</version>
             <executions>
                 <execution>
-                    <phase>package</phase>
                     <goals>
-                        <goal>shade</goal>
+                        <goal>build</goal>
                     </goals>
                     <configuration>
-                        <!--<artifactSet>-->
-                            <!--&lt;!&ndash;<includes>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<include>co.paralleluniverse:comsat-jdbc*</include>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</includes>&ndash;&gt;-->
-                            <!--<excludes>-->
-                                <!--<exclude>io.dropwizard:dropwizard-jdbi:*</exclude>-->
-                            <!--</excludes>-->
-                        <!--</artifactSet>-->
-                        <!--<filters>-->
-                            <!--&lt;!&ndash;<filter>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<artifact>co.paralleluniverse:comsat-jdbc</artifact>&ndash;&gt;-->
-                                <!--&lt;!&ndash;<includes>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<include>comsat-jdbc/**</include>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</includes>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</filter>&ndash;&gt;-->
-                            <!--<filter>-->
-                                <!--<artifact>io.dropwizard:dropwizard-jdbi</artifact>-->
-                                <!--<excludes>-->
-                                    <!--<exclude>dropwizard-jdbi/**</exclude>-->
-                                <!--</excludes>-->
-                            <!--</filter>-->
-                        <!--</filters>-->
-                        <transformers>
-                            <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                            <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                <mainClass>com.example.jdbc.base.JdbcInstrumentationApplication</mainClass>
-                            </transformer>
-                        </transformers>
+                        <appClass>com.example.jdbc.base.JdbcInstrumentationApplication</appClass>
+                        <types>fat</types>
                     </configuration>
                 </execution>
             </executions>

@@ -11,11 +11,9 @@ server:
       bindHost: 127.0.0.1 # only bind to loopback
 
 database:
-    driverClass:
-        org.apache.derby.jdbc.EmbeddedDriver
+    driverClass: org.apache.derby.jdbc.EmbeddedDriver
 
-    url:
-        jdbc:derby:build/mydb;user=root;password=root;create=true
+    url: jdbc:derby:build/mydb;user=root;password=root;create=true
 #    driverClass:
 #        co.paralleluniverse.fibers.jdbc.FiberDriver
 #
@@ -37,18 +35,18 @@ database:
     maxSize: 32
     checkConnectionWhileIdle: false
 
-#logging:
-#  level: INFO
-#  appenders:
-#    - type: file
-#      currentLogFilename: C:/log/jdbc-instrumentation.log
-#      threshold: ALL
-#      archive: true
-#      archivedLogFilenamePattern: C:/log/jdbc-instrumentation-%d.log
-#      archivedFileCount: 5
-#      timeZone: UTC
-#      #logFormat: "%-30(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32} - %msg%n"
-#    - type: console
-#      threshold: ALL
-#      timeZone: UTC
-#      target: stdout
+logging:
+  level: INFO
+  appenders:
+    - type: file
+      currentLogFilename: C:/log/jdbc-instrumentation.log
+      threshold: ALL
+      archive: true
+      archivedLogFilenamePattern: C:/log/jdbc-instrumentation-%d.log
+      archivedFileCount: 5
+      timeZone: UTC
+      #logFormat: "%-30(%d{HH:mm:ss.SSS} [%thread]) %-5level %logger{32} - %msg%n"
+    - type: console
+      threshold: ALL
+      timeZone: UTC
+      target: stdout
