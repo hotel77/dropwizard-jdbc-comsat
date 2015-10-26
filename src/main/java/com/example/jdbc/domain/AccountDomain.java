@@ -19,7 +19,7 @@ public class AccountDomain implements IAccountDomain {
 
 
     @Override
-    @Suspendable
+
     public Account createAccount(String name) throws SQLException, SuspendExecution {
 
         if (!accountDAO.tableExists())
@@ -33,7 +33,7 @@ public class AccountDomain implements IAccountDomain {
     }
 
     @Override
-    @Suspendable
+
     public Account getAccount(String name) throws SQLException, SuspendExecution {
         if (accountDAO.tableExists())
             return accountDAO.getAccount(name);
@@ -41,14 +41,14 @@ public class AccountDomain implements IAccountDomain {
     }
 
     @Override
-    @Suspendable
+
     public void dropTable() throws SQLException, SuspendExecution {
         if (accountDAO.tableExists())
             accountDAO.dropTable();
     }
 
     @Override
-    @Suspendable
+
     public List<Account> getAccounts() throws SQLException, SuspendExecution {
         if (accountDAO.tableExists())
             return accountDAO.getAccounts();

@@ -1,7 +1,6 @@
 package com.example.jdbc.dao;
 
 import co.paralleluniverse.fibers.SuspendExecution;
-import co.paralleluniverse.fibers.Suspendable;
 import com.example.jdbc.model.Account;
 import io.dropwizard.db.ManagedDataSource;
 
@@ -21,7 +20,7 @@ public class AccountDAO implements IAccountDAO {
     }
 
 
-    @Suspendable
+    
     public void createAccountTable() throws SQLException, SuspendExecution {
         try (Connection conn = ds.getConnection();
              PreparedStatement cs = conn.prepareStatement("create table " + tableName +
@@ -32,7 +31,7 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
-    @Suspendable
+    
     public boolean tableExists() throws SQLException, SuspendExecution{
         String query = "Select count(*) from " + this.tableName;
         try (Connection conn = ds.getConnection();
@@ -49,7 +48,7 @@ public class AccountDAO implements IAccountDAO {
         return true;
     }
 
-    @Suspendable
+    
     public int insertAccount(String name) throws SQLException, SuspendExecution{
         String cmd = "insert into " + tableName + "(NAME) values ('" + name + "')";
         try (Connection conn = ds.getConnection();
@@ -64,7 +63,7 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
-    @Suspendable
+    
     public Account getAccount(String name) throws SQLException, SuspendExecution{
         try (Connection conn = ds.getConnection();
              PreparedStatement ps = conn.prepareStatement("select id, name from " + tableName + " where name = '" + name + "'")
@@ -82,7 +81,7 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
-    @Suspendable
+    
     public void dropTable() throws SQLException, SuspendExecution {
         try (Connection conn = ds.getConnection();
              PreparedStatement cs = conn.prepareStatement("drop table " + tableName +"")
@@ -92,7 +91,7 @@ public class AccountDAO implements IAccountDAO {
         }
     }
 
-    @Suspendable
+    
     public List<Account> getAccounts () throws SQLException, SuspendExecution{
         List<Account> accounts = new ArrayList<Account>();
         try (Connection conn = ds.getConnection();
